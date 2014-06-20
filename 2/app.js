@@ -5,27 +5,31 @@ $(document).ready(function() {
   var goalMin = 0;
   var goalSec = 0;
   var clockID;
-  /*$("#buttons").on("click", function() {
-    window.clearInterval(clockID);
-    min = parseInt($("#minutes").val(), 10);
-    sec = parseInt($("#seconds").val(), 10);
-    if(sec === 60) {
-      sec = 0;
-      min = min + 1;
-    }
-  });*/
   $("#down").on("click", function() {
     window.clearInterval(clockID);
     goalMin = parseInt($("#minutes").val(), 10);
     goalSec = parseInt($("#seconds").val(), 10);
     min = parseInt($("#minutes").val(), 10);
     sec = parseInt($("#seconds").val(), 10);
+    if(isNaN(min)) {
+      min = 0;
+      goalMin = 0;
+    }
+    if(isNaN(sec)) {
+      sec = 0;
+      goalSec = 0;
+    }
     if(sec === 60) {
       sec = 0;
       min = min + 1;
     }
     toSpan(min, sec);
     clockID = setInterval(function() {
+      if(min === 0 && sec === 0) {
+        window.clearInterval(clockID);
+        alert("Done. " + goalMin + " minutes and " + goalSec + " seconds have passed.");
+        return 0;
+      }
       if(sec !== 0) {
         sec = sec - 1;
       } else {
@@ -33,10 +37,6 @@ $(document).ready(function() {
         sec = 59;
       }
       toSpan(min, sec);
-      if(min === 0 && sec === 0) {
-        window.clearInterval(clockID);
-        alert("Done. " + goalMin + " minutes and " + goalSec + " seconds have passed.");
-      }
     },
      1000);
   });
@@ -46,12 +46,23 @@ $(document).ready(function() {
     goalSec = parseInt($("#seconds").val(), 10);
     min = 0;
     sec = 0;
+    if(isNaN(goalMin)) {
+      goalMin = 0;
+    }
+    if(isNaN(goalSec)) {
+      goalSec = 0;
+    }
     if(sec === 60) {
       sec = 0;
       min = min + 1;
     }
     toSpan(min, sec);
     clockID = setInterval(function() {
+      if(min === goalMin && sec === goalSec) {
+        window.clearInterval(clockID);
+        alert("Done. ");
+        return 0;
+      }
       if(sec !== 59) {
         sec = sec + 1;
       } else {
@@ -59,10 +70,6 @@ $(document).ready(function() {
         sec = 0;
       }
       toSpan(min, sec);
-      if(min === goalMin && sec === goalSec) {
-        window.clearInterval(clockID);
-        alert("Done. ");
-      }
     },
      1000);
   });

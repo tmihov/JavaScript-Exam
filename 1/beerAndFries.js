@@ -1,5 +1,9 @@
 "use strict";
 
+var numericSort = function(a, b) {
+  return b-a;
+};
+
 var beerAndFries = function(items) {
   var beer = [];
   var fries = [];
@@ -11,12 +15,8 @@ var beerAndFries = function(items) {
       fries.push(item.score);
     }
   });
-  beer.sort(function(a, b) {
-    return b - a;
-  });
-  fries.sort(function(a, b) {
-    return b - a;
-  });
+  beer.sort(numericSort);
+  fries.sort(numericSort);
   while(beer.length) {
     result = result + (beer.pop() * fries.pop());
   }
